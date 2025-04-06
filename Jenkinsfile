@@ -25,32 +25,5 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/dounmogni/cicd_reddit.git'
             }
         }
-        stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('SonarQube-Server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-Clone-CI \
-                    -Dsonar.projectKey=Reddit-Clone-CI'''
-                }
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token'
-                }
-            }
-        }
-        stage('Install Dependencies') {
-            steps {
-                sh "npm install"
-            }
-        }
-        stage('TRIVY FS SCAN') {
-            steps {
-                sh "trivy fs . > trivyfs.txt"
-             }
-         }
 	
-         }
-	
-         }
+ }
