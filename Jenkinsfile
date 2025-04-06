@@ -4,7 +4,7 @@ pipeline {
         jdk 'jdk17'
         nodejs 'node16'
     }
-   environment {
+    environment {
         SCANNER_HOME = tool 'sonar-scanner'
         APP_NAME = "reddit-clone-pipeline"
         RELEASE = "1.0.0"
@@ -19,7 +19,7 @@ pipeline {
         stage('clean workspace') {
             steps {
                 cleanWs()
+            }
         }
     }
-
 }
