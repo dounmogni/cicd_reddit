@@ -88,15 +88,20 @@ pipeline {
     }
 
    post {
-        always {
-           emailext attachLog: true,
-               subject: "'${currentBuild.result}'",
-               body: "Project: ${env.JOB_NAME}<br/>" +
-                   "Build Number: ${env.BUILD_NUMBER}<br/>" +
-                   "URL: ${env.BUILD_URL}<br/>",
-               to: 'dounmogni67@gmail.com',
-               attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
-        }
-     }
+    always {
+        emailext(
+            subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.result}",
+            body: """<p>Build result: ${currentBuild.result}</p>
+                     <p>Project: ${env.JOB_NAME}</p>
+                     <p>Build Number: ${env.BUILD_NUMBER}</p>
+                     <p><a href="${env.BUILD_URL}">Voir le build</a></p>""",
+            mimeType: 'text/html',
+            attachLog: true,
+            attachmentsPattern: 'trivyfs.txt,trivyimage.txt',
+            to: 'dounmogni67@gmail.com'
+        )
+    }
+}
+
 
 }
